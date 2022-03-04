@@ -9,5 +9,6 @@ const divide=require("./divide")
     console.log(`The substraction of a&b is ${substract(a,b)}`)
     console.log(`The multiplication of a&b is ${multiply(a,b)}`)
     console.log(`The division of a&b is ${divide(a,b)}`)
+   
 
 
