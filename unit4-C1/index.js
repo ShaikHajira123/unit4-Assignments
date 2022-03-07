@@ -12,3 +12,6 @@ app.get("/books",(req,res)=>{
                 fourthBook:"science"}
       return res.send(books)
 })
+app.listen(2000,(req,res)=>{
+    console.log("listening on port 2000")
+})
