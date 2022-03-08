@@ -14,16 +14,16 @@ function allBooks(req,res,next){
 
 
 
-
+//var singleBook=express.Router()
 app.use( singleBook);
-  
 app.get('/book/:name',(req,res)=>{
     req.name=req.params.name
-   return  res.send({"bookName":req.name});
+    res.send({"bookName":req.name});
+    
 
 })
  function singleBook(req, res,next) {
-     console.log("called")
+    console.log(1)
     next()
 }
   
