@@ -30,6 +30,6 @@ function logger(req,res,next){
    return next()
 }
 
-app.listen(4000,()=>{
+app.listen(2000,()=>{
     console.log("listening on port 4000")
 })
