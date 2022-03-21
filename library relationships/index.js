@@ -4,7 +4,7 @@ const mongoose=require("mongoose")
 app.use(express.json())
 
 const connectDB = ()=>{
-     return mongoose.connect("mongodb://localhost:27017/assignment")
+     return mongoose.connect("mongodb+srv://shaikHajira123:hajira123@cluster0.vcq9f.mongodb.net/assignment?retryWrites=true&w=majority")
 }
 
 const sectionSchema=new mongoose.Schema({
@@ -59,27 +59,27 @@ const authorSchema=new mongoose.Schema({
 const BookAuthor=mongoose.model("bookAuthor",bookAuthorSchema)
 
 
-const checkedOutSchema = new mongoose.Schema({
-      userId:{
-          type:mongoose.Schema.Types.ObjectId,
-          ref:"user",
-          required:true,
-      },
-      booksId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"book",
-        required:true,
-      },
-      checkedOutTime:null,
-      checkedInTime:null,
+// const checkedOutSchema = new mongoose.Schema({
+//       userId:{
+//           type:mongoose.Schema.Types.ObjectId,
+//           ref:"user",
+//           required:true,
+//       },
+//       booksId:{
+//         type:mongoose.Schema.Types.ObjectId,
+//         ref:"book",
+//         required:true,
+//       },
+//       checkedOutTime:null,
+//       checkedInTime:null,
   
-},
+// },
 
-{    timestamps:true,
+// {    timestamps:true,
    
     
- })
-const Checkout=mongoose.model("checkout",checkedOutSchema)
+//  })
+// const Checkout=mongoose.model("checkout",checkedOutSchema)
 
 
 // app.post("/checkout",async(req,res)=>{
@@ -298,7 +298,7 @@ app.delete("/section/:id",async(req,res)=>{
     }
 })
 
-app.listen(3000,async ()=>{
+app.listen(5000,async ()=>{
     try{
        await connectDB()
     }catch(err){

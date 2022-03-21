@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "mongoose": "^6.2.7"
   },
   "name": "unit4-day1",
   "version": "1.0.0",
@@ -19,7 +21,6 @@
     "url": "https://github.com/ShaikHajira123/unit4-day1/issues"
   },
   "homepage": "https://github.com/ShaikHajira123/unit4-day1#readme",
-  "devDependencies": {},
   "keywords": [],
   "description": ""
 }
