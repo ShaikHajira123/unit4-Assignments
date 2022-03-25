@@ -4,7 +4,7 @@ const mongoose=require("mongoose")
 app.use(express.json())
 
 const connectDB = ()=>{
-     return mongoose.connect("mongodb+srv://shaikHajira123:hajira123@cluster0.vcq9f.mongodb.net/assignment?retryWrites=true&w=majority")
+     return mongoose.connect("mongodb://localhost:27017/assignment")
 }
 
 const sectionSchema=new mongoose.Schema({
@@ -59,52 +59,49 @@ const authorSchema=new mongoose.Schema({
 const BookAuthor=mongoose.model("bookAuthor",bookAuthorSchema)
 
 
-// const checkedOutSchema = new mongoose.Schema({
-//       userId:{
-//           type:mongoose.Schema.Types.ObjectId,
-//           ref:"user",
-//           required:true,
-//       },
-//       booksId:{
-//         type:mongoose.Schema.Types.ObjectId,
-//         ref:"book",
-//         required:true,
-//       },
-//       checkedOutTime:null,
-//       checkedInTime:null,
-  
-// },
-
-// {    timestamps:true,
+const checkedOutSchema = new mongoose.Schema({
+      userId:{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:"user",
+          required:true,
+      },
+      booksId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"book",
+        required:true,
+      },
+      checkedOutTime:{type:Date,required:true,default:null},
+      checkedInTime:{type:Date,required:false,default:null}
    
-    
-//  })
-// const Checkout=mongoose.model("checkout",checkedOutSchema)
+},
+
+{  
+      versionKey:false,
+      timestamps:true,
+   
+ })
+const Checkout=mongoose.model("checkout",checkedOutSchema)
 
 
-// app.post("/checkout",async(req,res)=>{
-//     try{
-//         const checkout=await Checkout.create(req.body)
-//         return res.status(200).send(checkout)
-//     }catch(err){
-//         return res.status(500).send({message:err.message})
-//     }
-//  })
+app.post("/checkout",async(req,res)=>{
+    try{
+        const checkout=await Checkout.create(req.body)
+        return res.status(200).send(checkout)
+    }catch(err){
+        return res.status(500).send({message:err.message})
+    }
+ })
 
-// app.get("/checkout/:id",async(req,res)=>{
-//     try{
-//         const author=await User.findById(req.params.id).lean().exec()
-       
-//         if(checkedOutTime!==null && checkedInTime===null){
-//         return res.status(200).send("book not available")
-//         }
-//     }catch(err){
-//         return res.status(500).send({message:err.message})
-//     }
-// })
+app.get("/checkout",async(req,res)=>{
+    try{
+        const check=await Checkout.find().lean().exec()
+       return res.status(200).send(check)
+       }catch(err){
+        return res.status(500).send({message:err.message})
+    }
+})
 
-
-app.post("/bookAuthor",async(req,res)=>{
+app.post("/bookauthor",async(req,res)=>{
     try{
         const author=await BookAuthor.create(req.body)
         return res.status(200).send(author)
@@ -117,9 +114,9 @@ app.get("/bookauthor",async(req,res)=>{
     try{
         const author=await BookAuthor.find()
         .populate({path:"booksId",select:{name:1,body:1,_id:0}})
-        .populate({path:"authorId",select:{first_name:1,_id:0},
-            populate:{path:"userId",select:{first_name:1}
-        }})
+        .populate({path:"authorId",select:{_id:1},
+    populate:{path:"userId",select:{first_name:1,_id:0}}
+        })
         .lean().exec()
         return res.status(200).send(author)
     }catch(err){
@@ -301,8 +298,9 @@ app.delete("/section/:id",async(req,res)=>{
 app.listen(5000,async ()=>{
     try{
        await connectDB()
+       console.log("connected to 3000 port")
     }catch(err){
-        console.log("err")
+        console.log({message:err.message})
     }
-    console.log("connected to 3000 port")
+   
 })
